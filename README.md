@@ -14,7 +14,7 @@ WITHOUT numpy !
 ```
 python3 test_performance.py
 ```
-Current version is <br/>
+Current version test @ CPU i5-3470 & GPU GTX1080ti <br/>
 numpy: 0.1695 sec <br/>
 TF: 0.337 sec
 
