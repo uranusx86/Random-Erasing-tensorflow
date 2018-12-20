@@ -2,7 +2,7 @@ import tensorflow as tf
 
 def random_erasing(img, probability = 0.5, sl = 0.02, sh = 0.4, r1 = 0.3):
     '''
-    img is a 3-D tensor and  HWC order
+    img is a 3-D variable (ex: tf.Variable(image, validate_shape=False) ) and  HWC order
     '''
     # HWC order
     height = tf.shape(img)[0]
@@ -30,9 +30,7 @@ def random_erasing(img, probability = 0.5, sl = 0.02, sh = 0.4, r1 = 0.3):
     update_row = tf.concat([img[x1:x1+h[first_true_idx], 0:y1, :],
                             erase_area,
                             img[x1:x1+h[first_true_idx], y1+w[first_true_idx]:width, :]], axis=1)
-    erasing_img = tf.concat([img[0:x1, :, :],
-                            update_row,
-                            img[x1+h[first_true_idx]:height, :, :]], axis=0)
+    erasing_img = tf.scatter_update(img, tf.range(start=x1, limit=x1+h[first_true_idx], delta=1), update_row)
 
     can_find_idx = tf.cond(tf.equal(tf.reduce_sum(tf.cast(cond, tf.int32)), 0), lambda: img, lambda: erasing_img)  # if cant find True, return original img
 

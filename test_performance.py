@@ -4,7 +4,7 @@ from scipy.misc import imsave
 import tensorflow as tf
 from random_erasing import random_erasing
 
-# numpy: 0.1695 sec, TF: 0.337 sec
+# numpy: 0.1695 sec, TF: 0.2282 sec
 
 def random_erase_np(img, probability = 0.5, sl = 0.02, sh = 0.4, r1 = 0.3):
     height = img.shape[0]
@@ -31,14 +31,19 @@ if __name__ == '__main__':
     raw_jpeg = tf.read_file("./data/cat.jpg")
     image = tf.image.decode_jpeg(raw_jpeg, channels=3)
 
+    # cause decode_jpeg output type is undefined until sess.run(), so must close validate init value shape
+    image_var = tf.Variable(image, validate_shape=False)
+
     for _ in range(5):
         start = time.time()
         img1 = tf.py_func(random_erase_np, [image], tf.uint8)
         imsave("random_erasing_np.jpg", sess.run(img1))
         print("Numpy version: {}".format(time.time()-start))
 
+        sess.run(tf.global_variables_initializer())
+
         start = time.time()
-        img = random_erasing(image)
+        img = random_erasing(image_var)
         imsave("random_erasing.jpg", sess.run(img))
         print("TF version: {}".format(time.time()-start))
 
