@@ -16,7 +16,7 @@ python3 test_performance.py
 ```
 Current version test @ CPU i5-3470 & GPU GTX1080ti <br/>
 numpy: 0.1695 sec/image <br/>
-TF: 0.2282 sec/image
+TF: 0.2158 sec/image
 
 # Ref
 1. [Random Erasing Data Augmentation](http://arxiv.org/abs/1602.02830), Zhun Zhong, Liang Zheng, Guoliang Kang, Shaozi Li, Yi Yang

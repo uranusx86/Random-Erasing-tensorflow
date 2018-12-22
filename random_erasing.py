@@ -27,10 +27,7 @@ def random_erasing(img, probability = 0.5, sl = 0.02, sh = 0.4, r1 = 0.3):
 
     erase_area = tf.cast(tf.random.uniform([h[first_true_idx], w[first_true_idx], channel], 0, 255, tf.int32), tf.uint8)
 
-    update_row = tf.concat([img[x1:x1+h[first_true_idx], 0:y1, :],
-                            erase_area,
-                            img[x1:x1+h[first_true_idx], y1+w[first_true_idx]:width, :]], axis=1)
-    erasing_img = tf.scatter_update(img, tf.range(start=x1, limit=x1+h[first_true_idx], delta=1), update_row)
+    erasing_img = img[x1:x1+h[first_true_idx], y1:y1+w[first_true_idx], :].assign(erase_area)
 
     can_find_idx = tf.cond(tf.equal(tf.reduce_sum(tf.cast(cond, tf.int32)), 0), lambda: img, lambda: erasing_img)  # if cant find True, return original img
 
