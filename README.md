@@ -2,7 +2,7 @@
 A data argumentation implementation of random erasing using Tensorflow <br/>
 WITHOUT numpy !
 
-**Note: this side project is just for fun, the performance is slower than numpy version due to tensor slicing and concatenate, DO NOT use in production**
+**Note: this side project is just for fun, the performance is a bit slower than numpy version due to tensor slicing, DO NOT use in production**
 
 # Dependency
 1. Tensorflow 1.10+
@@ -16,7 +16,7 @@ python3 test_performance.py
 ```
 Current version test @ CPU i5-3470 & GPU GTX1080ti <br/>
 numpy: 0.1695 sec/image <br/>
-TF: 0.2158 sec/image
+TF: 0.18 sec/image
 
 # Ref
 1. [Random Erasing Data Augmentation](http://arxiv.org/abs/1602.02830), Zhun Zhong, Liang Zheng, Guoliang Kang, Shaozi Li, Yi Yang
