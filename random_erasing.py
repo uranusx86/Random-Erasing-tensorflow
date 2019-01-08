@@ -12,8 +12,8 @@ def random_erasing(img, probability = 0.5, sl = 0.02, sh = 0.4, r1 = 0.3):
 
     erase_area_low_bound = tf.cast(tf.round(tf.sqrt(sl * area * r1)), tf.int32)
     erase_area_up_bound = tf.cast(tf.round(tf.sqrt((sh * area) / r1)), tf.int32)
-    h_upper_bound = tf.cond(erase_area_up_bound < height, lambda: erase_area_up_bound, lambda: height)
-    w_upper_bound = tf.cond(erase_area_up_bound < width, lambda: erase_area_up_bound, lambda: width)
+    h_upper_bound = tf.minimum(erase_area_up_bound, height)
+    w_upper_bound = tf.minimum(erase_area_up_bound, width)
 
     h = tf.random.uniform([], erase_area_low_bound, h_upper_bound, tf.int32)
     w = tf.random.uniform([], erase_area_low_bound, w_upper_bound, tf.int32)
